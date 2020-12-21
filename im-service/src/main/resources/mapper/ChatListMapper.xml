@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eekj.health.im.mapper.ChatListMapper">
+  <resultMap id="BaseResultMap" type="com.eekj.health.im.entity.ChatListEntity">
+    <!--@mbg.generated generated on Mon Jul 13 11:56:09 CST 2020.-->
+    <!--@Table chat_list-->
+    <id column="list_id" jdbcType="INTEGER" property="listId" />
+    <result column="master_id" jdbcType="INTEGER" property="masterId" />
+    <result column="other_id" jdbcType="INTEGER" property="otherId" />
+    <result column="other_name" jdbcType="VARCHAR" property="otherName" />
+     <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="message_type" jdbcType="INTEGER" property="messageType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Mon Jul 13 11:56:09 CST 2020.-->
+    list_id, master_id, other_id, other_name, content, message_type,create_time,update_time
+  </sql>
+
+  <!--批量添加聊天列表-->
+  <!--<insert id="addChatLists" parameterType="list">
+    insert into chat_list
+    (master_id, other_id, other_name,content,message_type, create_time)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.masterId,jdbcType=INTEGER},
+            #{item.otherId,jdbcType=INTEGER},
+            #{item.otherName,jdbcType=VARCHAR},
+            #{item.content,jdbcType=VARCHAR},
+            #{item.messageType,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>-->
+
+<!--修改列表-->
+  <update id="updateChatLists" parameterType="com.eekj.health.im.entity.ChatListEntity">
+    update chat_list
+    <trim prefix="SET" suffixOverrides=",">
+            <if test="masterId != null ">
+                 master_id = #{masterId},
+            </if>
+            <if test="otherId != null ">
+                 other_id = #{otherId},
+            </if>
+            <if test="otherName != null ">
+                 other_name = #{otherName},
+            </if>
+            <if test="content != null ">
+                 content = #{content},
+            </if>
+            <if test="messageType != null ">
+                 message_type = #{messageType},
+            </if>
+            <if test="updateTime != null ">
+                 update_time = #{updateTime}
+            </if>
+        </trim>
+        where master_id = #{masterId} and other_id = #{otherId}
+  </update>
+
+  <!--查询列表-->
+  <select id="selectChatList" resultMap="BaseResultMap">
+   select <include refid="Base_Column_List"></include>
+   from chat_list
+   <where>
+        <if test="masterId != null">
+            master_id = #{masterId,jdbcType=INTEGER}
+        </if>
+        <if test="otherId != null ">
+            and other_id = #{otherId,jdbcType=INTEGER}
+        </if>
+   </where>
+   order by create_time asc
+  </select>
+
+</mapper>
