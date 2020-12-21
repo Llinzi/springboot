@@ -22,9 +22,9 @@ public class COSUtils {
 
     private static String bucketName = "linzi-1997-1301403648";
 
-    private static String secretId = "AKIDKOPnvm41JK4kQpdud6KIF7jAPN5XG9Yg";
+    private static String secretId = "1";
 
-    private static String secretKey = "1Tf05En5exCqEzTra41i93mFRRuQgOmt";
+    private static String secretKey = "1";
 
     /**
      * https://linzi-1997-1301403648.cos-website.ap-chengdu.myqcloud.com/images/banner/1.jpg
